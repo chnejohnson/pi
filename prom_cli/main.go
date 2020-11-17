@@ -63,6 +63,7 @@ func recordTemp() {
 	}
 
 	for {
+		log.Printf("Start detecting...")
 		humidity, tempF, err := dht.ReadRetry(11)
 		if err != nil {
 			fmt.Println("Read error:", err)
@@ -70,15 +71,12 @@ func recordTemp() {
 
 		tempC := tempF2C(tempF)
 
+		log.Printf("temperature: %v humidity: %v\n", tempC, humidity)
 		temp.Set(tempC)
 		hmd.Set(humidity)
 
-		fmt.Printf("humidity: %v\n", humidity)
-		fmt.Printf("temperature: %v\n", tempC)
-
 		time.Sleep(60 * time.Second)
 	}
-
 }
 
 func tempF2C(fahrenheit float64) float64 {
